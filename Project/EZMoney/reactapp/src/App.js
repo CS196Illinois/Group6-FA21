@@ -1,6 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 import styled from 'styled-components';
+import React from 'react';
 
 const Button = styled.button`
   background-color: #3939ab;
@@ -17,24 +18,26 @@ const Button = styled.button`
   }
 `
 
-function click() {
-  alert("clicked");
-}
 function App() {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState('0');
+  var [input, setInput] = useState('Euro');
   function getData(val) {
     setData(val.target.value)
     console.warn(val.target.value)
+    setInput(val.target.value)
+    return input;
   }
   const USD = true;
-  
   return (
     <div className="App">
-      <h1>Currency Converter</h1>
-      <h2>1 {USD ? 'United States Dollar' : 'Euro'} equals</h2>
-      <h1> {data} Euro</h1>
-      <input type = "number" min="0" step="5" onChange={getData}></input>
-      <select>
+      <h1>EZMoney's Currency Converter</h1>
+      <br></br>
+      <h2> {data} {USD ? 'United States Dollar' : 'Euro'} equals</h2>
+      <h1> {data} </h1>
+      <input type = "number" min="0" max="1000000" step="5" 
+      placeholder="number" onInput={e => setInput(e.target.value)}
+      onChange={getData}/>
+      <select >
         <option value = "USD">USD</option>
         <option value = "EUR">EUR</option>
         <option value = "NZD">NZD</option>
@@ -47,7 +50,6 @@ function App() {
       </select>
       <br></br>
       <br></br>
-      <input type = "number" min="0" step="5" onChange={getData}></input>
       <select>
         <option value = "USD">USD</option>
         <option value = "EUR">EUR</option>
@@ -60,7 +62,7 @@ function App() {
       </select>
       <br></br>
       <br></br>
-      <Button onClick={click}>
+      <Button onClick={e => setInput(e.target.value)}>
         Convert
       </Button>
     </div>
